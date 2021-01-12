@@ -29,6 +29,35 @@ Application({
 
 That's it! You've created your first `Oak` application 🎉! It doesn't do anything yet because we haven't added any commands or options, keep reading to start adding functionality to your app.
 
+## Registering Commands
+
+To add commands to your applications you should call the `registerCommands` method on the application instance.
+
+```python
+Application({
+    'name': 'Oak CLI App',
+    'env': 'dev',
+    'version': '0.1.0',
+}).registerCommands().run()
+```
+
+You can either pass in a `list` of [class based](https://github.com/wyattcast44/oak) commands, or a `dictionary` of `signatures` and `handlers`. Let's look at passing in a `dictionary` first.
+
+```python
+
+def myCommand(self, args=None):
+
+    print('My first command!')
+
+Application({
+    'name': 'Oak CLI App',
+    'env': 'dev',
+    'version': '0.1.0',
+}).registerCommands({
+    'my-command': myCommand
+}).run()
+```
+
 ## Pre-built Commands
 
 ### List Command

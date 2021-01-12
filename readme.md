@@ -8,6 +8,33 @@
 - Ability to register options
 - Several pre-built commands and options you can use
 
+## Creating Applications
+
+To create a new Oak application:
+- import `Application` from `oak`
+- Create an instance of `Application`
+- Pass a [config](https://github.com/wyattcast44/oak) dictionary to the constructor
+
+```python
+from oak import Application
+
+a = Application({
+    'name': 'Python CLI',
+    'env': os.getenv('APP_ENV'),
+    'version': os.getenv('APP_VERSION'),
+}).registerCommands([
+    RunCommand,
+    ListCommand,
+    VersionCommand
+]).registerOptions({
+    '--version': VersionCommand
+}).registerOptions([
+    SilentOption,
+]).setDefaultRunable(
+    runable=ListCommand,
+).run()
+```
+
 ## Pre-built Commands
 
 ### List Command

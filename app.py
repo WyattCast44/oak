@@ -35,6 +35,17 @@ def version(app, args=None):
 # print(len(inspect.signature(version).parameters))
 # quit()
 
+class MyCommand:
+
+    def __init__(self, application):
+
+        self.application = application
+
+    def run(self, args=None):
+
+        print(f"\n{self.application.config.get('version', '0.1.0')}")
+
+
 a = Application({
     'name': 'Python CLI',
     'env': os.getenv('APP_ENV'),
@@ -43,7 +54,9 @@ a = Application({
     RunCommand,
     ListCommand,
     VersionCommand
-]).registerOptions({
+]).registerCommands({
+    'my-command': MyCommand
+}).registerOptions({
     '--version': VersionCommand
 }).registerOptions([
     SilentOption,

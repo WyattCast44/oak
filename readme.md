@@ -45,7 +45,7 @@ Application({
 
 You can either pass in a `list` of [class based](https://github.com/wyattcast44/oak) commands, or a `dictionary` of [function based](https://github.com/wyattcast44/oak) commands. 
 
-Let's take a look at function based commands first:
+Let's take a look at registering function based commands first:
 
 ```python
 from oak import Application
@@ -63,7 +63,31 @@ Application({
 }).run()
 ```
 
-In the example above, you can see we defined a function called `myCommand` and we passed it to the `registerCommands` method with the key `my-command`. This will register a command with your application, the signature will be the key and when a user calls this command, the `myCommand` function will be called. 
+In the example above, you can see we defined a function called `myCommand` and we passed it to the `registerCommands` method with the key `my-command`. This will register a command with your application, the signature will be the key and when a user calls this command, the `myCommand` function will be called. Read more about `function` based commands [here](https://github.com/wyattcast44/oak).
+
+Alright, now let's take a look at registering class based commands:
+
+```python
+from oak import Application
+
+class MyCommand:
+
+    def __init__(self, application):
+
+        self.application = application
+
+    def run(self, args=None):
+
+        print(f"\n{self.application.config.get('version', '0.1.0')}")
+
+Application({
+    'name': 'Oak CLI App',
+    'env': 'dev',
+    'version': '0.1.0',
+}).registerCommands({
+    'my-command': myCommand
+}).run()
+```
 
 ## Pre-built Commands
 

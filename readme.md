@@ -73,7 +73,7 @@ from oak import Application
 class MyCommand:
 
     signature = "my-command"
-    
+
     def __init__(self, application):
 
         self.application = application
@@ -90,6 +90,8 @@ Application({
     myCommand
 ]).run()
 ```
+
+In the example above, you can see we defined a class called `MyCommand` and we passed it to the `registerCommands` method. This will register a command with your application, the signature will be taken from the signature property and when a user calls this command, the `run` method of the class will be called. Read more about `class` based commands [here](https://github.com/wyattcast44/oak).
 
 ## Pre-built Commands
 

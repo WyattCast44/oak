@@ -13,27 +13,20 @@
 To create a new Oak application:
 - import `Application` from `oak`
 - Create an instance of `Application`
-- Pass a [config](https://github.com/wyattcast44/oak) dictionary to the constructor
+- Pass a dictionary with any [config](https://github.com/wyattcast44/oak) values to the constructor
+- Call the `run` method on the `Application`
 
 ```python
 from oak import Application
 
 a = Application({
-    'name': 'Python CLI',
-    'env': os.getenv('APP_ENV'),
-    'version': os.getenv('APP_VERSION'),
-}).registerCommands([
-    RunCommand,
-    ListCommand,
-    VersionCommand
-]).registerOptions({
-    '--version': VersionCommand
-}).registerOptions([
-    SilentOption,
-]).setDefaultRunable(
-    runable=ListCommand,
-).run()
+    'name': 'Oak CLI App',
+    'env': 'dev',
+    'version': '0.1.0',
+}).run()
 ```
+
+That's it! You've created your first `Oak` application 🎉! It doesn't do anything yet because we haven't added any commands or options, keep reading to start adding functionality to your app.
 
 ## Pre-built Commands
 

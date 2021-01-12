@@ -6,6 +6,7 @@
 
 - Ability to register commands
 - Ability to register options
+- Abilty to set a default command/option
 - Several pre-built commands and options you can use
 
 ## Creating Applications
@@ -19,7 +20,7 @@ To create a new Oak application:
 ```python
 from oak import Application
 
-a = Application({
+Application({
     'name': 'Oak CLI App',
     'env': 'dev',
     'version': '0.1.0',

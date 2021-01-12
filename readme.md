@@ -72,6 +72,8 @@ from oak import Application
 
 class MyCommand:
 
+    signature = "my-command"
+    
     def __init__(self, application):
 
         self.application = application
@@ -84,9 +86,9 @@ Application({
     'name': 'Oak CLI App',
     'env': 'dev',
     'version': '0.1.0',
-}).registerCommands({
-    'my-command': myCommand
-}).run()
+}).registerCommands([
+    myCommand
+]).run()
 ```
 
 ## Pre-built Commands

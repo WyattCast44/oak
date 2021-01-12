@@ -1,6 +1,6 @@
 # Oak
 
-Oak is a python command line application framework.
+🌲 Oak is a python command line application framework.
 
 ## Notable Features
 

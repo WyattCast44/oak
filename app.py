@@ -1,6 +1,3 @@
-import os
-import types
-import inspect
 from oak import Application
 from oak.Options import SilentOption
 from oak.Commands import RunCommand, ListCommand, VersionCommand
@@ -9,10 +6,6 @@ from oak.Commands import RunCommand, ListCommand, VersionCommand
 def version(app, args=None):
 
     print(f"\n{app.config['version']}")
-
-# signature
-# print(len(inspect.signature(version).parameters))
-# quit()
 
 
 a = Application({

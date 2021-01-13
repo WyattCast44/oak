@@ -22,10 +22,10 @@ a = Application({
     RunCommand,
     ListCommand,
     VersionCommand,
-]).registerCommands({
-    'vers': version
-}).registerOptions([
+]).registerOptions([
     SilentOption,
-]).setDefaultRunable(
+]).registerOptions({
+    '--version': VersionCommand
+}).setDefaultRunable(
     runable=ListCommand,
 ).run()

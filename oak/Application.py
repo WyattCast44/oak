@@ -48,10 +48,8 @@ class Application(object):
 
             # If we get a list, then we can assume
             # it is a list of class based commands
-            # in the future, I'd like to expand and
-            # allow functions to be registered.
-            # The problem is we need a some type
-            # signature to assign
+            # We just need to ensure the handler
+            # has some type of signature
 
             for command in commands:
 
@@ -65,11 +63,17 @@ class Application(object):
                     raise TypeError(
                         f"Function based commands must be registed by passing in a dictionary, where the key is the signature of the command. Given command: {command}. Read more at: https://github.com/wyattcast44/oak")
 
-                elif isinstance(command, Runable):
+                # Check if runnable instance
+                elif issubclass(command, Runable):
 
                     if command._hasAliases():
 
                         for signature in command.getSignature():
+
+                            if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                                raise ValueError(
+                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
 
                             self.commands.update({
                                 signature: command
@@ -77,10 +81,20 @@ class Application(object):
 
                     else:
 
+                        signature = command.getSignature()
+
+                        if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                            raise ValueError(
+                                f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
                         self.commands.update({
-                            command.getSignature(): command
+                            signature: command
                         })
 
+                    continue
+
+                # Check if general class
                 elif inspect.isclass(command):
 
                     if hasattr(command, "getSignature"):
@@ -91,21 +105,36 @@ class Application(object):
 
                             for sig in signature:
 
+                                if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                                    raise ValueError(
+                                        f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
                                 self.commands.update({
                                     sig: command
                                 })
 
                         else:
 
+                            if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                                raise ValueError(
+                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
                             self.commands.update({
-                                signature: signature
+                                signature: command
                             })
 
                     elif hasattr(command, "signature"):
 
                         if type(command.signature) == list:
 
-                            for signature in command.getSignature():
+                            for signature in command.signature:
+
+                                if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                                    raise ValueError(
+                                        f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
 
                                 self.commands.update({
                                     signature: command
@@ -113,9 +142,23 @@ class Application(object):
 
                         else:
 
+                            signature = command.signature
+
+                            if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+                                raise ValueError(
+                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
                             self.commands.update({
-                                signature: command.signature
+                                signature: command
                             })
+
+                    else:
+
+                        raise ValueError(
+                            f"Class based commands must have either a signature property, or a getSignature method. Given command: {command}")
+
+                    continue
 
         elif type(commands) == dict:
 

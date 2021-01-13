@@ -11,32 +11,32 @@ class Runable(object):
         self.application = application
 
     @classmethod
-    def getSignature(self):
+    def getSignature(cls):
 
-        return self.signature
+        return cls.signature
 
     @classmethod
-    def _hasAliases(self):
+    def _hasAliases(cls):
 
-        if type(self.getSignature()) == list:
+        if type(cls.getSignature()) == list:
 
             return True
 
         return False
 
     @classmethod
-    def _hasArguments(self):
+    def _hasArguments(cls):
 
-        if type(self.arguments) == dict and not len(self.arguments) == 0:
+        if type(cls.arguments) == dict and not len(cls.arguments) == 0:
 
             return True
 
         return False
 
     @classmethod
-    def _hasOptions(self):
+    def _hasOptions(cls):
 
-        if type(self.options) == dict and not len(self.options) == 0:
+        if type(cls.options) == dict and not len(cls.options) == 0:
 
             return True
 
@@ -51,9 +51,9 @@ class Runable(object):
     #         return signature.strip().split(" ")[0]
 
     @classmethod
-    def _hasArgsOrOptions(self):
+    def _hasArgsOrOptions(cls):
 
-        if self._hasArguments() or self._hasOptions():
+        if cls._hasArguments() or cls._hasOptions():
 
             return True
 

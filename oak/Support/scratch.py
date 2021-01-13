@@ -50,6 +50,120 @@ class Application(object):
 
             registrar.registerFromList(commands)
 
+            from oak.Support import Runable
+
+            # If we get a list, then we can assume
+            # it is a list of class based commands
+            # We just need to ensure the handler
+            # has some type of signature
+
+            for command in commands:
+
+                if type(command) == types.BuiltinFunctionType:
+
+                    raise TypeError(
+                        f"Command handler ({command}) cannot be of type: types.BuiltinFunctionType. Read more at: https://github.com/wyattcast44/oak")
+
+                elif type(command) == types.FunctionType:
+
+                    raise TypeError(
+                        f"Function based commands must be registed by passing in a dictionary, where the key is the signature of the command. Given command: {command}. Read more at: https://github.com/wyattcast44/oak")
+
+                # Check if runnable instance
+                elif issubclass(command, Runable):
+
+                    if command._hasAliases():
+
+                        if len(command.getSignature()) == 0:
+
+                            raise ValueError(
+                                f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {command.getSignature()}. Read more at: https://github.com/wyattcast44/oak")
+
+                        for signature in command.getSignature():
+
+                            self.__validateCommandSignature(signature, command)
+
+                            self.commands.update({
+                                signature: command
+                            })
+
+                    else:
+
+                        signature = command.getSignature()
+
+                        self.__validateCommandSignature(signature, command)
+
+                        self.commands.update({
+                            signature: command
+                        })
+
+                    continue
+
+                # Check if general class
+                elif inspect.isclass(command):
+
+                    if hasattr(command, "getSignature"):
+
+                        signature = command.getSignature()
+
+                        if type(signature) == list:
+
+                            if len(signature) == 0:
+
+                                raise ValueError(
+                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
+                            for sig in signature:
+
+                                self.__validateCommandSignature(sig, command)
+
+                                self.commands.update({
+                                    sig: command
+                                })
+
+                        else:
+
+                            self.__validateCommandSignature(signature, command)
+
+                            self.commands.update({
+                                signature: command
+                            })
+
+                    elif hasattr(command, "signature"):
+
+                        if type(command.signature) == list:
+
+                            if len(command.signature) == 0:
+
+                                raise ValueError(
+                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
+                            for signature in command.signature:
+
+                                self.__validateCommandSignature(
+                                    signature, command)
+
+                                self.commands.update({
+                                    signature: command
+                                })
+
+                        else:
+
+                            signature = command.signature
+
+                            self.__validateCommandSignature(signature, command)
+
+                            self.commands.update({
+                                signature: command
+                            })
+
+                    else:
+
+                        raise ValueError(
+                            f"Class based commands must have either a signature property, or a getSignature method. Given command: {command}")
+
+                    continue
+
         elif type(commands) == dict:
 
             # If we get a dict, then we can assume

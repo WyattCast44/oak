@@ -40,6 +40,14 @@ class Application(object):
 
         return
 
+    @classmethod
+    def __validateCommandSignature(cls, signature, command):
+
+        if type(signature) != str or len(signature) == 0 or "-" in signature:
+
+            raise ValueError(
+                f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+
     def registerCommands(self, commands):
 
         if type(commands) == list:
@@ -70,10 +78,7 @@ class Application(object):
 
                         for signature in command.getSignature():
 
-                            if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                                raise ValueError(
-                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                            self.__validateCommandSignature(signature, command)
 
                             self.commands.update({
                                 signature: command
@@ -83,10 +88,7 @@ class Application(object):
 
                         signature = command.getSignature()
 
-                        if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                            raise ValueError(
-                                f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                        self.__validateCommandSignature(signature, command)
 
                         self.commands.update({
                             signature: command
@@ -105,10 +107,7 @@ class Application(object):
 
                             for sig in signature:
 
-                                if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                                    raise ValueError(
-                                        f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                                self.__validateCommandSignature(sig, command)
 
                                 self.commands.update({
                                     sig: command
@@ -116,10 +115,7 @@ class Application(object):
 
                         else:
 
-                            if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                                raise ValueError(
-                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                            self.__validateCommandSignature(signature, command)
 
                             self.commands.update({
                                 signature: command
@@ -131,10 +127,8 @@ class Application(object):
 
                             for signature in command.signature:
 
-                                if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                                    raise ValueError(
-                                        f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                                self.__validateCommandSignature(
+                                    signature, command)
 
                                 self.commands.update({
                                     signature: command
@@ -144,10 +138,7 @@ class Application(object):
 
                             signature = command.signature
 
-                            if type(signature) != str or len(signature) == 0 or "-" in signature:
-
-                                raise ValueError(
-                                    f"Command signatures must be a non zero length string and must not contain the '-' character. Given command: {command}, signature: {signature}. Read more at: https://github.com/wyattcast44/oak")
+                            self.__validateCommandSignature(signature, command)
 
                             self.commands.update({
                                 signature: command

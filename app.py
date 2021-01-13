@@ -11,10 +11,6 @@ def version(app, args=None):
 
 class SomeCommand(Runable):
 
-    signature = [
-        'some:command'
-    ]
-
     def run(self, args=None):
 
         print("tada!")

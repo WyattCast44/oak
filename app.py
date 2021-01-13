@@ -13,7 +13,6 @@ def version(app, args=None):
 
     print(f"\n{app.config['version']}")
 
-
 # Built-in
 # print('\nprint:')
 # print(type(print) == types.BuiltinFunctionType)
@@ -35,29 +34,16 @@ def version(app, args=None):
 # print(len(inspect.signature(version).parameters))
 # quit()
 
-class MyCommand:
-
-    def __init__(self, application):
-
-        self.application = application
-
-    def run(self, args=None):
-
-        print(f"\n{self.application.config.get('version', '0.1.0')}")
-
 
 a = Application({
     'name': 'Python CLI',
-    'env': os.getenv('APP_ENV'),
     'version': os.getenv('APP_VERSION'),
 }).registerCommands([
     RunCommand,
     ListCommand,
-    VersionCommand
+    VersionCommand,
 ]).registerCommands({
-    'my-command': MyCommand
-}).registerOptions({
-    '--version': VersionCommand
+    'vers': version
 }).registerOptions([
     SilentOption,
 ]).setDefaultRunable(

@@ -137,8 +137,8 @@ class VersionOption:
         self.application = application
 
     def run(self, args=None):
-
-        print(f"\n{self.application.config.get('version', '0.1.0')}")
+        
+        print(f"\n{self.application.config.get('version')}")
 
 Application({
     'name': 'Oak CLI App',

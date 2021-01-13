@@ -44,6 +44,8 @@ class Application(object):
 
         if type(commands) == list:
 
+            from oak.Support import Runable
+
             # If we get a list, then we can assume
             # it is a list of class based commands
             # in the future, I'd like to expand and
@@ -53,19 +55,67 @@ class Application(object):
 
             for command in commands:
 
-                if command._hasAliases():
+                if type(command) == types.BuiltinFunctionType:
 
-                    for signature in command.getSignature():
+                    raise TypeError(
+                        f"Command handler ({command}) cannot be of type: types.BuiltinFunctionType. Read more at: https://github.com/wyattcast44/oak")
+
+                elif type(command) == types.FunctionType:
+
+                    raise TypeError(
+                        f"Function based commands must be registed by passing in a dictionary, where the key is the signature of the command. Given command: {command}. Read more at: https://github.com/wyattcast44/oak")
+
+                elif isinstance(command, Runable):
+
+                    if command._hasAliases():
+
+                        for signature in command.getSignature():
+
+                            self.commands.update({
+                                signature: command
+                            })
+
+                    else:
 
                         self.commands.update({
-                            signature: command
+                            command.getSignature(): command
                         })
 
-                else:
+                elif inspect.isclass(command):
 
-                    self.commands.update({
-                        command.getSignature(): command
-                    })
+                    if hasattr(command, "getSignature"):
+
+                        signature = command.getSignature()
+
+                        if type(signature) == list:
+
+                            for sig in signature:
+
+                                self.commands.update({
+                                    sig: command
+                                })
+
+                        else:
+
+                            self.commands.update({
+                                signature: signature
+                            })
+
+                    elif hasattr(command, "signature"):
+
+                        if type(command.signature) == list:
+
+                            for signature in command.getSignature():
+
+                                self.commands.update({
+                                    signature: command
+                                })
+
+                        else:
+
+                            self.commands.update({
+                                signature: command.signature
+                            })
 
         elif type(commands) == dict:
 
@@ -185,6 +235,11 @@ class Application(object):
         if possibleCommandsAndArgs[0] in self.commands:
 
             print('found...')
+
+        # new strategy, first loop thru all args
+        # and search for any known application options
+        # rip these out and the rest can be considered
+        # args and options for the given command
 
         print(possibleOptions, possibleCommandsAndArgs)
         quit()

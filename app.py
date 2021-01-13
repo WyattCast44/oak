@@ -2,11 +2,8 @@ import os
 import types
 import inspect
 from oak import Application
-from dotenv import load_dotenv
 from oak.Options import SilentOption
 from oak.Commands import RunCommand, ListCommand, VersionCommand
-
-load_dotenv()
 
 
 def version(app, args=None):
@@ -37,7 +34,7 @@ def version(app, args=None):
 
 a = Application({
     'name': 'Python CLI',
-    'version': os.getenv('APP_VERSION'),
+    'version': '0.1.0',
 }).registerCommands([
     RunCommand,
     ListCommand,

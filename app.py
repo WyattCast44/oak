@@ -10,23 +10,6 @@ def version(app, args=None):
 
     print(f"\n{app.config['version']}")
 
-# Built-in
-# print('\nprint:')
-# print(type(print) == types.BuiltinFunctionType)
-# print(type(print) == types.FunctionType)
-# print(inspect.isclass(print))
-
-# # User defined
-# print('\nversion:')
-# print(type(version) == types.BuiltinFunctionType)
-# print(type(version) == types.FunctionType)
-
-# # Class
-# print('\nclass:')
-# print(type(VersionCommand) == types.BuiltinFunctionType)
-# print(type(VersionCommand) == types.FunctionType)
-# print(inspect.isclass(VersionCommand))
-
 # signature
 # print(len(inspect.signature(version).parameters))
 # quit()

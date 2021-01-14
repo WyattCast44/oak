@@ -3,7 +3,9 @@ from oak.Support import Runable
 
 class SilentOption(Runable):
 
-    signature = ["--silent"]
+    signature = [
+        "--silent"
+    ]
 
     def run(self, args=None):
 

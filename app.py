@@ -2,7 +2,7 @@ from oak import Application
 from oak.Options import SilentOption
 from oak.Commands import RunCommand, ListCommand, VersionCommand
 
-a = Application({
+Application({
     'name': 'Python CLI',
     'version': '0.1.0',
 }).registerCommands([

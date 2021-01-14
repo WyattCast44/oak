@@ -52,12 +52,7 @@ class Application(object):
 
         elif type(commands) == dict:
 
-            # If we get a dict, then we can assume
-            # it is a list of signatures and handlers
-
-            for signature, handler in commands.items():
-
-                self.commands.update({signature: handler})
+            registrar.registerFromDict(commands)
 
         else:
 

@@ -115,3 +115,32 @@ class CommandRegistrar(object):
             else:
 
                 self.__raiseInvalidCommandDataStructureError(self, command)
+
+    def registerFromDict(self, commands: dict):
+
+        from oak.Support import Runable
+
+        for signature, command in commands.items():
+
+            self.__validateCommandSignature(signature, command)
+
+            if type(command) == types.BuiltinFunctionType:
+
+                raise TypeError(
+                    f"Command handler ({command}) cannot be of type: types.BuiltinFunctionType. Read more at: https://github.com/wyattcast44/oak")
+
+            elif type(command) == types.FunctionType:
+
+                self.application.commands.update({
+                    signature: command
+                })
+
+            elif inspect.isclass(command):
+
+                self.application.commands.update({
+                    signature: command
+                })
+
+            else:
+
+                self.__raiseInvalidCommandDataStructureError(self, command)

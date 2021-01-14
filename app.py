@@ -8,11 +8,11 @@ Application({
 }).registerCommands([
     RunCommand,
     ListCommand,
-    VersionCommand,
+    VersionCommand
 ]).registerOptions([
     SilentOption,
 ]).registerOptions({
     '--version': VersionCommand
 }).setDefaultRunable(
-    runable=ListCommand,
+    runable=ListCommand
 ).run()

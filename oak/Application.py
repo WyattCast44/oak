@@ -57,45 +57,28 @@ class Application(object):
         else:
 
             raise ValueError(
-                "To register commands you must either pass in a list of class based commands, or a dictionary of signature: handler commands. Read more at https://github.com/wyattcast44/oak")
+                "To register commands you must either pass in a list of class based commands, or a dictionary of signatures and handlers. Read more at https://github.com/wyattcast44/oak")
 
         return self
 
     def registerOptions(self, options):
 
+        from oak.Support import OptionRegistrar
+
+        registrar = OptionRegistrar(self)
+
         if type(options) == list:
 
-            # If we get a list, then we can assume
-            # it is a list of class based commands
-            # in the future, I'd like to expand and
-            # allow functions to be registered.
-            # The problem is we need a some type
-            # signature to assign
-
-            for option in options:
-
-                if option._hasAliases():
-
-                    for signature in option.getSignature():
-
-                        self.options.update({
-                            signature: option
-                        })
-
-                else:
-
-                    self.options.update({
-                        option.getSignature(): option
-                    })
+            registrar.registerFromList(options)
 
         elif type(options) == dict:
 
-            # If we get a dict, then we can assume
-            # it is a list of signatures and handlers
+            registrar.registerFromDict(options)
 
-            for signature, handler in options.items():
+        else:
 
-                self.options.update({signature: handler})
+            raise ValueError(
+                "To register options you must either pass in a list of class based options, or a dictionary of signatures and handlers. Read more at https://github.com/wyattcast44/oak")
 
         return self
 

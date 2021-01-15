@@ -108,13 +108,12 @@ class Application(object):
                 # default args to pass in
 
                 if self.defaultCommand['args'] == None:
-                    self.defaultCommand['handler'](self).run()
+                    self._runRunnable(self.defaultCommand['handler'])
                 else:
-                    self.defaultCommand['handler'](self).run(
-                        self.defaultCommand['args']
-                    )
+                    self._runRunnable(
+                        self.defaultCommand['handler'], self.defaultCommand['args'])
 
-            self.exit(0)
+            return self
 
         if len(self.args) == 1:
 
@@ -125,7 +124,7 @@ class Application(object):
             else:
                 self.exit(127)  # command not found
 
-            self.exit(0)
+            return self
 
         # Alright we have more than one arg
         # We need to parse the arguments
@@ -206,19 +205,19 @@ class Application(object):
 
     def _runRunnable(self, runable, args=None):
 
-        from oak.Support import Runable
+        if inspect.isclass(runable):
 
-        if isinstance(runable, Runable):
+            runable = runable(self)
 
-            runable(self).run(args)
+            if hasattr(runable, "beforeRun"):
 
-        elif inspect.isclass(runable):
+                runable.beforeRun()
 
-            runable(self).run(args)
+            runable.run(args)
 
-        elif type(runable) == types.BuiltinFunctionType:
+            if hasattr(runable, "afterRun"):
 
-            runable(self, args)
+                runable.afterRun()
 
         elif type(runable) == types.FunctionType:
 

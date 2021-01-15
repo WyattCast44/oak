@@ -5,17 +5,9 @@ class ListCommand(Runable):
 
     signature = ["list"]
 
-    arguments = {
-        'name': {
-            'description': 'Any commands/options that start with the given characters will be listed',
-            'default': None
-        }
-    }
-
     def run(self, args=None):
         self.printCommands()
         self.printOptions()
-        self.application.exit(0)
 
     def printCommands(self):
 

@@ -63,7 +63,7 @@ class OptionRegistrar(object):
 
                 cls.__raiseSignatureValidationError(signature, option)
 
-            if signature.startswith('-'):
+            if not signature.startswith('--'):
 
                 cls.__raiseSignatureValidationError(signature, option)
 
@@ -94,7 +94,7 @@ class OptionRegistrar(object):
                     self.__raiseSignatureAccessibleError(option)
 
                 # Validate the signature(s)
-                self.__validateoptionSignature(signature, option)
+                self.__validateOptionSignature(signature, option)
 
                 # Register the option with the application
                 # if has aliases, register each
@@ -122,7 +122,7 @@ class OptionRegistrar(object):
 
         for signature, option in options.items():
 
-            self.__validateoptionSignature(signature, option)
+            self.__validateOptionSignature(signature, option)
 
             if type(option) == types.BuiltinFunctionType:
 

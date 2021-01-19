@@ -1,7 +1,7 @@
-from oak.Support import Runable
+from oak.Support import Runnable
 
 
-class HelpCommand(Runable):
+class HelpCommand(Runnable):
 
     signature = ["help"]
 

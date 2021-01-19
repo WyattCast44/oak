@@ -1,7 +1,7 @@
-from oak.Support import Runable
+from oak.Support import Runnable
 
 
-class VersionCommand(Runable):
+class VersionCommand(Runnable):
 
     signature = ["version"]
 

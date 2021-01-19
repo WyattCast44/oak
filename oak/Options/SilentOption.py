@@ -1,7 +1,7 @@
-from oak.Support import Runable
+from oak.Support import Runnable
 
 
-class SilentOption(Runable):
+class SilentOption(Runnable):
 
     signature = [
         "--silent"

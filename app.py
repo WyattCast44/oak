@@ -15,4 +15,6 @@ Application({
     SilentOption,
 ]).registerOptions({
     '--version': VersionCommand
-}).run()
+}).setDefaultRunnable(
+    runnable=ListCommand
+).run()

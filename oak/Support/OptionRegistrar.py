@@ -69,7 +69,7 @@ class OptionRegistrar(object):
 
     def registerFromList(self, options: list):
 
-        from oak.Support import Runable
+        from oak.Support import Runnable
 
         for option in options:
 
@@ -118,7 +118,7 @@ class OptionRegistrar(object):
 
     def registerFromDict(self, options: dict):
 
-        from oak.Support import Runable
+        from oak.Support import Runnable
 
         for signature, option in options.items():
 

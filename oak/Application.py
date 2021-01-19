@@ -82,14 +82,14 @@ class Application(object):
 
         return self
 
-    def setDefaultRunable(self, runable, args=None):
+    def setDefaultRunnable(self, runnable, args=None):
 
         # Can set a default command
         # that will run if the user runs
         # the app w/o passing any args.
 
         self.defaultCommand = {
-            'handler': runable,
+            'handler': runnable,
             'args': args
         }
 
@@ -203,25 +203,25 @@ class Application(object):
                     'value': arg.split("=")[1] if "=" in arg else True
                 })
 
-    def _runRunnable(self, runable, args=None):
+    def _runRunnable(self, runnable, args=None):
 
-        if inspect.isclass(runable):
+        if inspect.isclass(runnable):
 
-            runable = runable(self)
+            runnable = runnable(self)
 
-            if hasattr(runable, "beforeRun"):
+            if hasattr(runnable, "beforeRun"):
 
-                runable.beforeRun()
+                runnable.beforeRun()
 
-            runable.run(args)
+            runnable.run(args)
 
-            if hasattr(runable, "afterRun"):
+            if hasattr(runnable, "afterRun"):
 
-                runable.afterRun()
+                runnable.afterRun()
 
-        elif type(runable) == types.FunctionType:
+        elif type(runnable) == types.FunctionType:
 
-            runable(self, args)
+            runnable(self, args)
 
         else:
 

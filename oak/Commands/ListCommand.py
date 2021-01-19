@@ -1,7 +1,7 @@
-from oak.Support import Runable
+from oak.Support import Runnable
 
 
-class ListCommand(Runable):
+class ListCommand(Runnable):
 
     signature = ["list"]
 

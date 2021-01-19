@@ -1,7 +1,7 @@
-from oak.Support import Runable
+from oak.Support import Runnable
 
 
-class RunCommand(Runable):
+class RunCommand(Runnable):
 
     signature = ["run"]
 

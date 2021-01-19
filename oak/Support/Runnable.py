@@ -1,4 +1,4 @@
-class Runable(object):
+class Runnable(object):
 
     signature = None
 

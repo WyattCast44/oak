@@ -1,11 +1,19 @@
 from oak import Application
 from oak.Options import HelpOption, SilentOption
 from oak.Commands import RunCommand, HelpCommand, ListCommand, VersionCommand
+from oak.Support import CommandRegistrar
 
-Application({
+a = Application({
     'name': 'Python CLI',
     'version': '0.1.0',
-}).registerCommands([
+})
+
+# c = CommandRegistrar(a)
+# c['key'] = 'value'
+# print(c)
+# quit()
+
+a.registerCommands([
     RunCommand,
     HelpCommand,
     ListCommand,
@@ -16,5 +24,6 @@ Application({
 ]).registerOptions({
     '--version': VersionCommand
 }).setDefaultRunnable(
-    runnable=ListCommand
+    runnable=ListCommand,
+    args=None
 ).run()

@@ -5,7 +5,6 @@ import inspect
 class CommandRegistrar(object):
 
     def __init__(self, application):
-
         self.application = application
 
     @classmethod

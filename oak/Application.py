@@ -1,6 +1,7 @@
 import sys
 import types
 import inspect
+from oak.Support import CommandRegistrar
 
 
 class Application(object):
@@ -28,6 +29,7 @@ class Application(object):
 
         # Bind the commands container
         self.commands = {}
+        # self.commands = CommandRegistrar(self)
 
         # Bind the options container
         self.options = {}
@@ -41,8 +43,6 @@ class Application(object):
         return
 
     def registerCommands(self, commands):
-
-        from oak.Support import CommandRegistrar
 
         registrar = CommandRegistrar(self)
 

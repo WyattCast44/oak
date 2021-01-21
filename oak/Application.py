@@ -28,8 +28,7 @@ class Application(object):
         self.config.update({'script': sys.argv[0]})
 
         # Bind the commands container
-        self.commands = {}
-        # self.commands = CommandRegistrar(self)
+        self.commands = CommandRegistrar(self)
 
         # Bind the options container
         self.options = {}

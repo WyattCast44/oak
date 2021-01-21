@@ -8,11 +8,6 @@ a = Application({
     'version': '0.1.0',
 })
 
-# c = CommandRegistrar(a)
-# c['key'] = 'value'
-# print(c)
-# quit()
-
 a.registerCommands([
     RunCommand,
     HelpCommand,

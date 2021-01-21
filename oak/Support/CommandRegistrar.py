@@ -1,10 +1,14 @@
 import types
 import inspect
+from oak.Support import Repository
 
 
-class CommandRegistrar(object):
+class CommandRegistrar(Repository):
 
     def __init__(self, application):
+
+        super().__init__()
+
         self.application = application
 
     @classmethod
@@ -101,13 +105,13 @@ class CommandRegistrar(object):
 
                     for sig in signature:
 
-                        self.application.commands.update({
+                        self.store.update({
                             sig: command
                         })
 
                 else:
 
-                    self.application.commands.update({
+                    self.store.update({
                         signature: command
                     })
 
@@ -130,13 +134,13 @@ class CommandRegistrar(object):
 
             elif type(command) == types.FunctionType:
 
-                self.application.commands.update({
+                self.store.update({
                     signature: command
                 })
 
             elif inspect.isclass(command):
 
-                self.application.commands.update({
+                self.store.update({
                     signature: command
                 })
 

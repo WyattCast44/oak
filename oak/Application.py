@@ -1,7 +1,7 @@
 import sys
 import types
 import inspect
-from oak.Support import CommandRegistrar
+from oak.Support import CommandRegistrar, OptionRegistrar
 
 
 class Application(object):
@@ -31,7 +31,7 @@ class Application(object):
         self.commands = CommandRegistrar(self)
 
         # Bind the options container
-        self.options = {}
+        self.options = OptionRegistrar(self)
 
         # Set the default command to None
         self.defaultCommand = None
@@ -43,15 +43,13 @@ class Application(object):
 
     def registerCommands(self, commands):
 
-        registrar = CommandRegistrar(self)
-
         if type(commands) == list:
 
-            registrar.registerFromList(commands)
+            self.commands.registerFromList(commands)
 
         elif type(commands) == dict:
 
-            registrar.registerFromDict(commands)
+            self.commands.registerFromDict(commands)
 
         else:
 
@@ -62,17 +60,13 @@ class Application(object):
 
     def registerOptions(self, options):
 
-        from oak.Support import OptionRegistrar
-
-        registrar = OptionRegistrar(self)
-
         if type(options) == list:
 
-            registrar.registerFromList(options)
+            self.options.registerFromList(options)
 
         elif type(options) == dict:
 
-            registrar.registerFromDict(options)
+            self.options.registerFromDict(options)
 
         else:
 

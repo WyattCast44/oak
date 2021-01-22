@@ -1,10 +1,13 @@
 import types
 import inspect
+from oak.Support import Repository
 
 
-class OptionRegistrar(object):
+class OptionRegistrar(Repository):
 
     def __init__(self, application):
+
+        super(Repository).__init__()
 
         self.application = application
 
@@ -102,13 +105,13 @@ class OptionRegistrar(object):
 
                     for sig in signature:
 
-                        self.application.options.update({
+                        self.store.update({
                             sig: option
                         })
 
                 else:
 
-                    self.application.options.update({
+                    self.store.update({
                         signature: option
                     })
 
@@ -131,13 +134,13 @@ class OptionRegistrar(object):
 
             elif type(option) == types.FunctionType:
 
-                self.application.options.update({
+                self.store.update({
                     signature: option
                 })
 
             elif inspect.isclass(option):
 
-                self.application.options.update({
+                self.store.update({
                     signature: option
                 })
 

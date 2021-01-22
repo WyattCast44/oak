@@ -7,7 +7,7 @@ class CommandRegistrar(Repository):
 
     def __init__(self, application):
 
-        super().__init__()
+        super().__init__(Repository)
 
         self.application = application
 

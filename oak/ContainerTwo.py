@@ -29,3 +29,9 @@ class ContainerTwo(Singleton):
             provider = concrete['provider']
             method = concrete['method']
             return getattr(provider(), method)()
+
+    def instance(self):
+        pass
+
+    def singleton(self):
+        pass

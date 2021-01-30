@@ -59,10 +59,12 @@ class ContainerTwo(Singleton):
 
         if inspect.isclass(concrete):
 
-            signature = inspect.signature(concrete)
+            signature = inspect.signature(concrete.__init__)
+            print(signature.parameters)
+            quit()
 
             if signature.empty():
-                return concrete()
+                return concrete().register()
 
             else:
                 print('has a sign')

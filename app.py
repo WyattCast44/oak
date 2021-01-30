@@ -25,10 +25,11 @@ class SMTPMailer:
 
 class SMTPMailerProvider:
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, mailer: SMTPMailer):
+        print(mailer)
+        pass
 
-    def __new__(cls):
+    def register(self):
         return SMTPMailer("Tada")
 
 

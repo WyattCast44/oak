@@ -25,6 +25,9 @@ class SMTPMailer:
 
 class SMTPMailerProvider:
 
+    def __init__(self):
+        super().__init__()
+
     def __new__(cls):
         return SMTPMailer("Tada")
 

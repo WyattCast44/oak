@@ -66,6 +66,7 @@ class ContainerTwo(Singleton):
 
             else:
                 print('has a sign')
+                print(signature)
                 quit()
 
     def flush(self):

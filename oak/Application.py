@@ -33,6 +33,11 @@ class Application(object):
         # Bind the options container
         self.options = OptionRegistrar(self)
 
+        # print('State is same:', self.options.store == self.commands.store)
+        # print('State type:', type(self.options.store))
+        # print('State:', self.options.store)
+        # quit()
+
         # Set the default command to None
         self.defaultCommand = None
 

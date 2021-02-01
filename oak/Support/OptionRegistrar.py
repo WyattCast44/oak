@@ -7,7 +7,7 @@ class OptionRegistrar(Repository):
 
     def __init__(self, application):
 
-        super(Repository).__init__()
+        super().__init__()
 
         self.application = application
 

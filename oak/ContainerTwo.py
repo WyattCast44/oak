@@ -42,6 +42,8 @@ class ContainerTwo(Singleton):
 
         # 4. Otherwise the concrete must be referencing something else so we'll recursively resolve it until we get either a singleton instance, a closure, or run out of references and will have to try instantiating it.
         else:
+            # print('down here')
+            # quit()
             obj = self.make(concrete)
 
         # 5. If the class was registered as a singleton, we will hold the instance so we can always return it.
@@ -60,16 +62,35 @@ class ContainerTwo(Singleton):
         if inspect.isclass(concrete):
 
             signature = inspect.signature(concrete.__init__)
-            print(signature.parameters)
-            quit()
 
-            if signature.empty():
+            if len(signature.parameters) == 0:
                 return concrete().register()
 
             else:
-                print('has a sign')
-                print(signature)
-                quit()
+                instances = self.resolveDependencies(signature.parameters)
+
+                return concrete(**instances).register()
+
+    def resolveDependencies(self, deps):
+
+        results = {}
+
+        for name, hint in deps.items():
+
+            if name == 'self':
+                continue
+
+            if name != 'self' and hint.annotation == inspect.Parameter.empty:
+                raise Exception(
+                    "Unable to resolve dependency without annotation.")
+            if type(hint.annotation) == types.BuiltinFunctionType:
+                raise Exception(
+                    "Unable to resolve dependency annotation of builtin function.")
+            else:
+                obj = self.make(hint.annotation)
+                results[hint.name] = hint.annotation
+
+        return results
 
     def flush(self):
         self._bindings = {}

@@ -7,7 +7,7 @@ class CommandRegistrar(Repository):
 
     def __init__(self, application):
 
-        super().__init__(Repository)
+        super().__init__()
 
         self.application = application
 
@@ -134,13 +134,13 @@ class CommandRegistrar(Repository):
 
             elif type(command) == types.FunctionType:
 
-                self.store.update({
+                self.store.merge({
                     signature: command
                 })
 
             elif inspect.isclass(command):
 
-                self.store.update({
+                self.store.merge({
                     signature: command
                 })
 

@@ -1,4 +1,4 @@
-class Repository(object):
+class Repository():
 
     def __init__(self, store={}):
         self.store = store

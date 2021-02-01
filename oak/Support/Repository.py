@@ -1,40 +1,32 @@
-class Repository(object):
+from collections.abc import MutableMapping
+
+
+class Repository(MutableMapping):
 
     def __init__(self):
         self.store = {}
 
-    def __setitem__(self, key, item):
-        self.store[key] = item
-
     def __getitem__(self, key):
         return self.store[key]
 
-    def __repr__(self):
-        return repr(self.store)
+    def __delitem__(self, key):
+        value = self[key]
+        del self.store[key]
+        self.pop(value, None)
+
+    def __setitem__(self, key, value):
+        if key in self:
+            del self[self[key]]
+        if value in self:
+            del self[value]
+        self.store[key] = value
+        self.store[value] = key
+
+    def __iter__(self):
+        return iter(self.store)
 
     def __len__(self):
         return len(self.store)
 
-    def __delitem__(self, key):
-        del self.store[key]
-
-    def clear(self):
-        return self.store.clear()
-
-    def copy(self):
-        return self.store.copy()
-
-    def has_key(self, k):
-        return k in self.store
-
-    def update(self, *args, **kwargs):
-        return self.store.update(*args, **kwargs)
-
-    def items(self):
-        return self.store.items()
-
-    def keys(self):
-        return self.store.keys()
-
-    def values(self):
-        return self.store.values()
+    def __repr__(self):
+        return f"{type(self).__name__}({self.store})"

@@ -7,11 +7,9 @@ class CommandRegistrar(Repository):
 
     def __init__(self, application):
 
+        super().__init__()
+
         self.application = application
-
-        super().__init__(self)
-
-        self.store = {}
 
     @classmethod
     def __raiseSignatureAccessibleError(cls, command):

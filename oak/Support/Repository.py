@@ -1,7 +1,7 @@
 class Repository(object):
 
     def __init__(self):
-        self.store = store
+        self.store = {}
 
     def __setitem__(self, key, item):
         self.store[key] = item

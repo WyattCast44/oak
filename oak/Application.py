@@ -95,6 +95,11 @@ class Application(object):
 
     def run(self):
 
+        print('State is same:', self.options.store == self.commands.store)
+        print('State type:', type(self.options.store))
+        print('State:', self.options.store)
+        quit()
+
         if len(self.args) == 0:
 
             # If no args, need to check if we have

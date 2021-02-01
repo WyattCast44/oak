@@ -1,7 +1,7 @@
 import sys
 import types
 import inspect
-from oak.Support import CommandRegistrar, OptionRegistrar
+from oak.Support import CommandRegistrar, OptionRegistrar, ContainerTwo
 
 
 class Application(object):
@@ -13,16 +13,14 @@ class Application(object):
 
     def __init__(self, config={}):
 
-        from oak import Container
-
         # Bind the container
-        self.container = Container()
+        self.container = ContainerTwo()
 
         # Merge the default config and user config
         self.config = {**self.__defaultConfig, **config}
 
         # Register base bindings
-        self.container.bind("application", self)
+        self.container.instance(Application, self)
 
         # Grab the name of the script
         self.config.update({'script': sys.argv[0]})
@@ -32,11 +30,6 @@ class Application(object):
 
         # Bind the options container
         self.options = OptionRegistrar(self)
-
-        # print('State is same:', self.options.store == self.commands.store)
-        # print('State type:', type(self.options.store))
-        # print('State:', self.options.store)
-        # quit()
 
         # Set the default command to None
         self.defaultCommand = None
@@ -94,12 +87,6 @@ class Application(object):
         return self
 
     def run(self):
-
-        # print('State is same:', self.options.store == self.commands.store)
-        # print('State type:', type(self.options.store))
-        # print('Options:', self.options.store)
-        # print('Commands:', self.commands.store)
-        # quit()
 
         if len(self.args) == 0:
 
@@ -211,7 +198,9 @@ class Application(object):
 
         if inspect.isclass(runnable):
 
-            runnable = runnable(self)
+            runnable = self.container.make(runnable)
+
+            # runnable = runnable(self)
 
             if hasattr(runnable, "beforeRun"):
 

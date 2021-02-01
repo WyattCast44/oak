@@ -26,6 +26,8 @@ class ContainerTwo(Singleton):
 
     def make(self, abstract):
 
+        print(abstract)
+
         # 1. If the type has already been resolved as a singleton, just return it
         if(abstract in self._instances):
             return self._instances[abstract]
@@ -64,12 +66,19 @@ class ContainerTwo(Singleton):
             signature = inspect.signature(concrete.__init__)
 
             if len(signature.parameters) == 0:
-                return concrete().register()
+
+                if hasattr(concrete, "register"):
+                    return concrete().register()
+                else:
+                    return concrete()
 
             else:
                 instances = self.resolveDependencies(signature.parameters)
 
-                return concrete(**instances).register()
+                if hasattr(concrete, "register"):
+                    return concrete(**instances).register()
+                else:
+                    return concrete(**instances)
 
     def resolveDependencies(self, deps):
 

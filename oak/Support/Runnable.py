@@ -1,3 +1,6 @@
+from oak import Application
+
+
 class Runnable(object):
 
     signature = None
@@ -6,9 +9,12 @@ class Runnable(object):
 
     options = {}
 
-    def __init__(self, application):
+    def __init__(self, application: Application):
 
         self.application = application
+
+        # print(self.application)
+        # quit()
 
     @classmethod
     def getSignature(cls):

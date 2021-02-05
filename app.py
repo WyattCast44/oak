@@ -15,11 +15,7 @@ a = Application({
     SilentOption,
 ]).registerOptions({
     '--version': VersionCommand
-})
-
-a.setDefaultRunnable(
+}).setDefaultRunnable(
     runnable=ListCommand,
     args=None
-)
-
-a.run()
+).run()

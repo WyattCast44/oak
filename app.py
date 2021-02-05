@@ -1,7 +1,6 @@
 from oak import Application
 from oak.Options import HelpOption, SilentOption
-from oak.Commands import RunCommand, HelpCommand, VersionCommand
-from oak import ListCommand
+from oak.Commands import RunCommand, HelpCommand, VersionCommand, ListCommand
 
 a = Application({
     'name': 'Python CLI',

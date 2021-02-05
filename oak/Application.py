@@ -13,10 +13,10 @@ class Application(object):
 
     def __init__(self, config={}):
 
-        from oak import ContainerTwo
+        from oak import Container
 
         # Bind the container
-        self.container = ContainerTwo()
+        self.container = Container()
 
         # Merge the default config and user config
         self.config = {**self.__defaultConfig, **config}

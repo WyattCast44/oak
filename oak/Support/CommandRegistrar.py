@@ -72,7 +72,7 @@ class CommandRegistrar(Repository):
 
     def registerFromList(self, commands: list):
 
-        from oak.Support import Runnable
+        from oak import Runnable
 
         for command in commands:
 
@@ -121,7 +121,7 @@ class CommandRegistrar(Repository):
 
     def registerFromDict(self, commands: dict):
 
-        from oak.Support import Runnable
+        from oak import Runnable
 
         for signature, command in commands.items():
 

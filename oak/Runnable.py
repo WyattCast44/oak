@@ -1,4 +1,4 @@
-from oak import Application
+from .Application import Application
 
 
 class Runnable(object):
@@ -10,8 +10,6 @@ class Runnable(object):
     options = {}
 
     def __init__(self, application: Application):
-
-        print(application, type(application))
         self.application = application
 
     @classmethod

@@ -1,13 +1,21 @@
 import types
 import inspect
-from oak.Support import Singleton
 
 
-class ContainerTwo(Singleton):
+class ContainerTwo(object):
+
+    _instance = None
 
     _bindings = {}
 
     _instances = {}
+
+    def __new__(cls):
+
+        if cls._instance is None:
+            cls._instance = super(ContainerTwo, cls).__new__(cls)
+
+        return cls._instance
 
     def bind(self, abstract, concrete, shared=False):
 
@@ -26,8 +34,6 @@ class ContainerTwo(Singleton):
 
     def make(self, abstract):
 
-        print(abstract)
-
         # 1. If the type has already been resolved as a singleton, just return it
         if(abstract in self._instances):
             return self._instances[abstract]
@@ -44,8 +50,6 @@ class ContainerTwo(Singleton):
 
         # 4. Otherwise the concrete must be referencing something else so we'll recursively resolve it until we get either a singleton instance, a closure, or run out of references and will have to try instantiating it.
         else:
-            # print('down here')
-            # quit()
             obj = self.make(concrete)
 
         # 5. If the class was registered as a singleton, we will hold the instance so we can always return it.
@@ -97,10 +101,6 @@ class ContainerTwo(Singleton):
                     "Unable to resolve dependency annotation of builtin function.")
             else:
                 obj = self.make(hint.annotation)
-                results[hint.name] = hint.annotation
+                results[hint.name] = obj
 
         return results
-
-    def flush(self):
-        self._bindings = {}
-        self._instances = {}

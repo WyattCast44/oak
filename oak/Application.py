@@ -1,7 +1,7 @@
 import sys
 import types
 import inspect
-from oak.Support import CommandRegistrar, OptionRegistrar, ContainerTwo
+from oak.Support import CommandRegistrar, OptionRegistrar
 
 
 class Application(object):
@@ -12,6 +12,8 @@ class Application(object):
     }
 
     def __init__(self, config={}):
+
+        from oak import ContainerTwo
 
         # Bind the container
         self.container = ContainerTwo()
@@ -199,8 +201,6 @@ class Application(object):
         if inspect.isclass(runnable):
 
             runnable = self.container.make(runnable)
-
-            # runnable = runnable(self)
 
             if hasattr(runnable, "beforeRun"):
 

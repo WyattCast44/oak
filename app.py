@@ -12,5 +12,5 @@ a = Application({
 ).registerOptions(
     OakOptions
 ).setDefaultRunnable(
-    runnable=OakCommands.ListCommand
+    runnable=OakCommands.RunCommand
 ).run()

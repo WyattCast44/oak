@@ -63,7 +63,17 @@ class Container(object):
     def build(self, concrete):
 
         if type(concrete) == types.FunctionType:
-            return concrete()
+
+            signature = inspect.signature(concrete)
+
+            if len(signature.parameters) == 0:
+
+                return concrete()
+
+            else:
+                instances = self.resolveDependencies(signature.parameters)
+
+                return concrete(**instances)
 
         if inspect.isclass(concrete):
 
@@ -93,14 +103,27 @@ class Container(object):
             if name == 'self':
                 continue
 
-            if name != 'self' and hint.annotation == inspect.Parameter.empty:
-                raise Exception(
-                    "Unable to resolve dependency without annotation.")
-            if type(hint.annotation) == types.BuiltinFunctionType:
-                raise Exception(
-                    "Unable to resolve dependency annotation of builtin function.")
-            else:
-                obj = self.make(hint.annotation)
-                results[hint.name] = obj
+            if name != 'self':
+
+                if hint.annotation != inspect.Parameter.empty:
+
+                    # Has a type hint
+
+                    if type(hint.annotation) == types.BuiltinFunctionType:
+                        raise Exception(
+                            "Unable to resolve dependency annotation of builtin function.")
+                    else:
+                        obj = self.make(hint.annotation)
+                        results[hint.name] = obj
+
+                else:
+
+                    # No type hint
+                    if hint.default == inspect.Parameter.empty:
+
+                        raise Exception(
+                            f"Unable to resolve dependency without annotation or default value. Parameter: {name}")
+                    else:
+                        results[hint.name] = hint.default
 
         return results

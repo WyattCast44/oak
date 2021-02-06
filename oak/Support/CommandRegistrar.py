@@ -70,6 +70,19 @@ class CommandRegistrar(Repository):
 
                 cls.__raiseSignatureValidationError(signature, command)
 
+    def registerFromModule(self, module):
+
+        commands = []
+
+        classes = dict([(name, cls)
+                        for name, cls in module.__dict__.items() if isinstance(cls, type)])
+
+        for name, FQCN in classes.items():
+
+            commands.append(FQCN)
+
+        self.registerFromList(commands)
+
     def registerFromList(self, commands: list):
 
         from oak import Runnable
@@ -134,13 +147,13 @@ class CommandRegistrar(Repository):
 
             elif type(command) == types.FunctionType:
 
-                self.store.merge({
+                self.store.update({
                     signature: command
                 })
 
             elif inspect.isclass(command):
 
-                self.store.merge({
+                self.store.update({
                     signature: command
                 })
 

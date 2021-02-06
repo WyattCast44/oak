@@ -51,6 +51,10 @@ class Application(object):
 
             self.commands.registerFromDict(commands)
 
+        elif type(commands) == types.ModuleType:
+
+            self.commands.registerFromModule(commands)
+
         else:
 
             raise ValueError(
@@ -214,7 +218,7 @@ class Application(object):
 
         elif type(runnable) == types.FunctionType:
 
-            runnable(self, args)
+            self.container.make(runnable)
 
         else:
 

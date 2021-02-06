@@ -1,21 +1,15 @@
 from oak import Application
+import oak.Commands as OakCommands
 from oak.Options import HelpOption, SilentOption
-from oak.Commands import RunCommand, HelpCommand, VersionCommand, ListCommand
 
 a = Application({
     'name': 'Python CLI',
     'version': '0.1.0',
-}).registerCommands([
-    RunCommand,
-    HelpCommand,
-    ListCommand,
-    VersionCommand
-]).registerOptions([
+}).registerCommands(
+    OakCommands
+).registerOptions([
     HelpOption,
     SilentOption,
-]).registerOptions({
-    '--version': VersionCommand
-}).setDefaultRunnable(
-    runnable=ListCommand,
-    args=None
+]).setDefaultRunnable(
+    runnable=OakCommands.ListCommand
 ).run()

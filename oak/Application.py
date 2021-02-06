@@ -72,6 +72,10 @@ class Application(object):
 
             self.options.registerFromDict(options)
 
+        elif type(options) == types.ModuleType:
+
+            self.options.registerFromModule(options)
+
         else:
 
             raise ValueError(

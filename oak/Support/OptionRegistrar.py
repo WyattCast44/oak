@@ -70,6 +70,19 @@ class OptionRegistrar(Repository):
 
                 cls.__raiseSignatureValidationError(signature, option)
 
+    def registerFromModule(self, module):
+
+        options = []
+
+        classes = dict([(name, cls)
+                        for name, cls in module.__dict__.items() if isinstance(cls, type)])
+
+        for name, FQCN in classes.items():
+
+            options.append(FQCN)
+
+        self.registerFromList(options)
+
     def registerFromList(self, options: list):
 
         from oak import Runnable

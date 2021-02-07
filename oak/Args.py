@@ -1,7 +1,5 @@
-from oak.Support import Repository
-
-
-class Args(Repository):
+class Args(object):
 
     def __init__(self, args=[]):
-        super().__init__()
+
+        self.raw = args

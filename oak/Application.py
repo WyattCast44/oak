@@ -1,6 +1,7 @@
 import sys
 import types
 import inspect
+from oak.Providers import SimpleOutputProvider
 from oak.Support import CommandRegistrar, OptionRegistrar
 
 
@@ -10,6 +11,10 @@ class Application(object):
         'env': 'dev',
         'silent': False
     }
+
+    __defaultProviders = [
+        SimpleOutputProvider
+    ]
 
     def __init__(self, config={}):
 
@@ -27,6 +32,10 @@ class Application(object):
         # Grab the name of the script
         self.config.update({'script': sys.argv[0]})
 
+        # Register providers
+        self.registerProviders()
+        self.bootProviders()
+
         # Bind the commands container
         self.commands = CommandRegistrar(self)
 
@@ -40,6 +49,32 @@ class Application(object):
         self.args = sys.argv[1:]
 
         return
+
+    def registerProviders(self):
+
+        self.registeredProviders = []
+
+        for provider in self.__defaultProviders:
+
+            p = self.container.make(provider)
+
+            if hasattr(p, "register"):
+
+                p.register()
+
+            self.registeredProviders.append(p)
+
+    def bootProviders(self):
+
+        self.bootedProviders = []
+
+        for provider in self.registeredProviders:
+
+            if hasattr(provider, "boot"):
+
+                provider.boot()
+
+            self.bootedProviders.append(provider)
 
     def registerCommands(self, commands):
 

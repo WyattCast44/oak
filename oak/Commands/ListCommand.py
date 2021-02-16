@@ -3,7 +3,7 @@ from oak import Runnable
 
 class ListCommand(Runnable):
 
-    signature = ["list"]
+    signature = "list"
 
     def run(self, args=None):
         self.printCommands()

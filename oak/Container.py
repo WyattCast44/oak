@@ -44,8 +44,6 @@ class Container(object):
         if concrete != abstract:
             concrete = concrete['concrete']
 
-        print(concrete)
-
         # 3. If the concrete is either a closure, or we didn't get a resolver, then we'll try to instantiate it.
         if type(concrete) == types.FunctionType or concrete == abstract:
             obj = self.build(concrete)

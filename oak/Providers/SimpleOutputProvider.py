@@ -1,10 +1,7 @@
-class SimpleOutputProvider:
+from oak import Provider
 
-    def __init__(self, application: Application):
 
-        self.application = application
-
-        print(self.application)
+class SimpleOutputProvider(Provider):
 
     def register(self):
 
